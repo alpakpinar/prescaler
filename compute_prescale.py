@@ -62,6 +62,12 @@ if __name__ == '__main__':
         'HLT_PFJet60',
         'HLT_PFJet80',
         'HLT_PFJet140',
+        'HLT_PFJet200',
+        'HLT_PFJet260',
+        'HLT_PFJet320',
+        'HLT_PFJet400',
+        'HLT_PFJet500',
+        'HLT_PFJet550',
     ]
 
     for trigger in tqdm(trigger_list):
