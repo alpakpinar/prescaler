@@ -6,6 +6,8 @@ import re
 import numpy as np
 import pandas as pd
 
+from tqdm import tqdm
+
 pjoin = os.path.join
 
 class Prescaler():
@@ -43,12 +45,18 @@ class Prescaler():
         outpath = pjoin(outdir, f'prescales_{self.trigger}.csv') 
         df.to_csv(outpath, index=False)
 
-        print(f'Prescales saved at: {outpath}')
-
 if __name__ == '__main__':
-    p = Prescaler(
-        trigger='HLT_PFJet40',
-        year=2017
-    )
-    df = p.compute()
-    p.dump_to_csv(df)
+    trigger_list = [
+        'HLT_PFJet40',
+        'HLT_PFJet60',
+        'HLT_PFJet80',
+        'HLT_PFJet140',
+    ]
+
+    for trigger in tqdm(trigger_list):
+        p = Prescaler(
+            trigger=trigger,
+            year=2017
+        )
+        df = p.compute()
+        p.dump_to_csv(df)
