@@ -36,7 +36,18 @@ class Prescaler():
         
         # Compute prescale as a function of lumi section
         merged_df['Prescale'] = 1 / (merged_df['recorded(/fb)_trig'] / merged_df['recorded(/fb)_all'])
-        return merged_df[['run:fill', 'LumiSection','Prescale']]
+
+        # Some processing to do:
+        # Throw out the fill # + update lumisection
+        merged_df['Run'] = merged_df['run:fill'].str.split(':').str[0]
+        merged_df['LumiSection'] = merged_df['LumiSection'].str.split(':').str[0]
+
+        # Finally: Drop entries with empty PS values!
+        modified_df = merged_df[['Run', 'LumiSection','Prescale']]
+        modified_df.replace('', np.nan, inplace=True)
+        modified_df.dropna(subset=['Prescale'], inplace=True)
+
+        return modified_df
 
     def dump_to_csv(self, df):
         outdir = self.inputdir.replace('input','output')
