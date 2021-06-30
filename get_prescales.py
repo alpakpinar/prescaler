@@ -15,7 +15,7 @@ def plot_prescales(trigger, year):
     df = pd.read_csv(f'./output/{year}/prescales_{trigger}.csv')
     prescales = df['Prescale']
     fig, ax = plt.subplots()
-    ax.hist(prescales)
+    ax.hist(prescales, bins=100)
 
     ax.set_xlabel('Prescale')
     ax.set_ylabel('Lumi-section Counts')
